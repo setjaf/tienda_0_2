@@ -26,6 +26,7 @@ class TiendasController extends Controller
             return  redirect()->route('tiendas.nueva');
         if(session()->has('idTienda'))
             return redirect()->route('tienda');
+        //dd(session()->get('idTienda'));
         return view('tienda.tiendas')->with('tiendas',Auth::user()->tiendas);
     }
 
@@ -55,7 +56,7 @@ class TiendasController extends Controller
         }
 
         if($tienda!=null){
-            return redirect('tiendas')->with('message',"La tienda {$tienda->nombre} se ha creado correctamente.");
+            return redirect('tiendas')->with('messageError',"La tienda {$tienda->nombre} se ha creado correctamente.");
         }
 
         return back()->withInput($data)->with('messageError',true);
@@ -68,7 +69,7 @@ class TiendasController extends Controller
                 'nombre'=>'string|required|max:255',
                 'calle'=>'string|required|max:255',
                 'numero'=>'string|required|max:255',
-                'cp'=>'string|required|max:5'
+                'cp'=>'string|required|max:5|min:5'
             ]
         );
     }

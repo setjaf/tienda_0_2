@@ -27,7 +27,7 @@ class Producto extends Model
     }
 
     protected $fillable = [
-        'idTienda','idMarca','producto','unidadMedida','formaVenta','tamano','disponible','deseado','precioVenta','imagen','activo'
+        'codigo','idTienda','idMarca','producto','unidadMedida','formaVenta','tamano','disponible','deseado','precioVenta','imagen','activo'
     ];
 
     protected $casts = [

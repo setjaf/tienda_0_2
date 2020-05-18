@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Tienda;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -60,6 +61,10 @@ class LoginController extends Controller
      */
     protected function authenticated(Request $request, $user)
     {
+        // Si ya existe una tienda abierta, se hace la redirección al inicio de esa tienda.
+        if (session()->has('idTienda')) {
+            return redirect('tienda');
+        }
         switch ($user->idRol) {
             case '1':
                 $this->redirectTo = '/super';
@@ -67,7 +72,6 @@ class LoginController extends Controller
             case '2':
                 $this->redirectTo = '/tiendas';
                 break;
-
             default:
                 $this->redirectTo = '/home';
                 break;
@@ -78,13 +82,20 @@ class LoginController extends Controller
     {
         $this->guard()->logout();
 
-        $tienda = $request->session('idTienda');
+        $idTienda = null;
+
+        if (session()->has('idTienda')) {
+            $idTienda = session('idTienda');
+        }
 
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
 
-        session(['idTienda'=>$tienda]);
+        if ($idTienda != null) {
+            session(['idTienda'=>$idTienda]);
+            return redirect()->route('tienda.login');
+        }
 
         if ($response = $this->loggedOut($request)) {
             return $response;

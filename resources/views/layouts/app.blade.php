@@ -19,14 +19,17 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <!-- Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    @if (isset($tienda))
-                        {{__($tienda->nombre)}}
+                    @if (isset($tiendaLog))
+                        {{__($tiendaLog->nombre)}}
                     @else
                         {{ config('app.name', 'Laravel') }}
                     @endif
@@ -54,19 +57,6 @@
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
                             @endif
-                            @if (isset($tienda))
-                                <li>
-                                    <a class="nav-link" href="{{ route('tienda.cerrar') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('cerrar-form').submit();">
-                                        {{ __("Cerrar {$tienda->nombre}") }}
-                                    </a>
-
-                                    <form id="cerrar-form" action="{{ route('tienda.cerrar') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </li>
-                            @endif
                         @else
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -84,21 +74,21 @@
                                         @csrf
                                     </form>
                                 </div>
-                                @if (isset($tienda))
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="nav-link" href="{{ route('tienda.cerrar') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('cerrar-form').submit();">
-                                        {{ __("Cerrar {$tienda->nombre}") }}
-                                    </a>
-
-                                    <form id="cerrar-form" action="{{ route('tienda.cerrar') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </div>
-                                @endif
                             </li>
                         @endguest
+                        @if (isset($tiendaLog))
+                            <li>
+                                <a class="nav-link" href="{{ route('tienda.cerrar') }}"
+                                    onclick="event.preventDefault();
+                                                    document.getElementById('cerrar-form').submit();">
+                                    {{ __("Cerrar {$tiendaLog->nombre}") }}
+                                </a>
+
+                                <form id="cerrar-form" action="{{ route('tienda.cerrar') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+                            </li>
+                        @endif
                     </ul>
                 </div>
             </div>
@@ -108,6 +98,7 @@
             @yield('content')
         </main>
     </div>
+    @yield('modales')
     @yield('scripts')
 </body>
 </html>

@@ -8,9 +8,14 @@
                 <div class="card-header">{{ __('Registrar tienda') }}</div>
 
                 <div class="card-body">
-                    @if(session('messageError'))
+                    @if(session()->has('messageError'))
                         <div class="alert alert-danger" role="alert">
-                            {{ __('No se ha podido crear la nueva tienda.') }}
+                            {{ session('messageError') }}
+                        </div>
+                    @endif
+                    @if(session()->has('message'))
+                        <div class="alert alert-primary" role="alert">
+                            {{ session('message') }}
                         </div>
                     @endif
                     <form method="POST" action="{{ route('tiendas.nueva') }}" enctype="multipart/form-data">
@@ -119,6 +124,8 @@
             }
 
             reader.readAsDataURL(input.files[0]);
+        }else{
+            $('#imagenTienda').attr('src', '');
         }
     }
     $(document).ready(function () {

@@ -15,16 +15,17 @@ class CreateProductosTable extends Migration
     {
         Schema::create('productos', function (Blueprint $table) {
             $table->id();
+            $table->string('codigo',13);
             $table->foreignId('idTienda');
             $table->foreignId('idMarca');
             $table->string('producto')->nullable(false);
             $table->enum('unidadMedida',['ml','g','u'])->nullable(false);
             $table->enum('formaVenta',['pieza','granel'])->nullable(false);
-            $table->float('tamano')->nullable(false);
+            $table->float('tamano')->nullable(true);
             $table->float('disponible')->nullable(false)->default(0);
             $table->float('deseado')->nullable(false)->default(0);
             $table->float('precioVenta')->nullable(false)->default(0);
-            $table->string('imagen');
+            $table->string('imagen')->default('producto_default.jpg');
             $table->boolean('activo')->nullable(false)->default(true);
             $table->timestamps();
 

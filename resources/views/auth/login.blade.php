@@ -6,8 +6,8 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">
-                    @if(isset($tienda))
-                        {{__("Inicicar sesión en la tienda {$tienda->nombre}")}}
+                    @if(isset($tiendaLog))
+                        {{__("Inicicar sesión en la tienda {$tiendaLog->nombre}")}}
                     @else
                         {{ __('Iniciar sesión de administrador') }}
                     @endif
@@ -15,7 +15,7 @@
                 </div>
 
                 <div class="card-body">
-                    <form method="POST" action="@if(isset($tienda)){{route('tienda.login')}}@else{{route('login')}}@endif">
+                    <form method="POST" action="@if(isset($tiendaLog)){{route('tienda.login')}}@else{{route('login')}}@endif">
                         @csrf
 
                         <div class="form-group row">

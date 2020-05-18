@@ -24,14 +24,12 @@ class TiendaController extends Controller
 
     public function __construct(){
         // Revisa si hay un usuario loggeado
-        $this->middleware('auth',['except'=>['cerar','showLogin']]);
+        $this->middleware('auth',['except'=>['cerar','showLogin','login']]);
         // Comprueba si el correo del usuario actual está verificado
-        $this->middleware('verified',['except'=>['login','showLogin']]);
+        $this->middleware('verified',['except'=>['cerar','login','showLogin']]);
         // Verifica que una tienda esté iniciada, si no está iniciada te regresa a '/tiendas'
-        $this->middleware('tiendaOpen',['except'=>['cerrar']]);
+        $this->middleware('tiendaOpen',['except'=>['entrar']]);
     }
-
-
 
     public function entrar(Request $request){
         session()->forget('idTienda');
@@ -41,16 +39,14 @@ class TiendaController extends Controller
     }
 
     public function cerrar(Request $request){
-        dd(session()->has('idTienda'));
         session()->forget('idTienda');
-        dd(session()->has('idTienda'));
         return redirect()->route('tiendas');
     }
 
     public function showLogin()
     {
         $tienda = Tienda::find(session('idTienda'));
-        return view('auth.login')->with('tienda',$tienda);
+        return view('auth.login')->with('tiendaLog',$tienda);
     }
 
     public function login(Request $request)
@@ -70,11 +66,11 @@ class TiendaController extends Controller
 
             return $this->sendLockoutResponse($request);
         }
-        dd($tienda->empleados->where('email',$email)->first());
 
         if($tienda->empleados->where('email',$email)->first()!=null || $tienda->administrador->email == $email){
 
             if ($this->attemptLogin($request)) {
+                //dd(Auth::user());
                 return $this->sendLoginResponse($request);
             }
             $this->incrementLoginAttempts($request);
@@ -90,8 +86,10 @@ class TiendaController extends Controller
 
     public function showTienda()
     {
-        dd(Auth::user());
-        return ;
+        //dd(Auth::user());
+        $tienda = Tienda::find(session('idTienda'));
+        return view('tienda.inicio')->with('tiendaLog',$tienda);
     }
+
 
 }
