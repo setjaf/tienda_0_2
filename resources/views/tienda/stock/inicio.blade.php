@@ -15,110 +15,162 @@
                     @endif
                     <div class="row justify-content-center my-auto">
 
-                        <div class="col-12 text-center row">
-                            <div class="col-md-4">
+                        <div class="col-12 text-center row justify-content-center">
+                            <div class="col-md-4 col-6">
                                 <a href="{{route('stock.showNuevo')}}" class="text-secondary">
-                                    <div class="p-5 text-center">
+                                    <div class="p-3 text-center">
                                         <i class="material-icons" style="font-size: 70px">add_box</i>
                                         <p>Crear nuevo producto</p>
                                     </div>
                                 </a>
                             </div>
 
-                            <div class="col-md-4">
+                            <div class="col-md-4 col-6">
                                 <a href="{{route('stock.showMarcas')}}" class="text-secondary">
-                                    <div class="p-5 text-center">
+                                    <div class="p-3 text-center">
                                         <i class="material-icons" style="font-size: 70px">loyalty</i>
                                         <p>Marcas</p>
                                     </div>
                                 </a>
                             </div>
 
-                            <div class="col-md-4">
-                                <a href="{{url('super/categorias/')}}" class="text-secondary">
-                                    <div class="p-5 text-center">
+                            <div class="col-md-4 col-6">
+                                <a href="{{route('stock.showCategorias')}}" class="text-secondary">
+                                    <div class="p-3 text-center">
                                         <i class="material-icons" style="font-size: 70px">label</i>
                                         <p>Categorias</p>
                                     </div>
                                 </a>
                             </div>
                         </div>
-                        <div class="col-12 row overflow-auto lista-producto" style="max-height:500px;">
-                        @unless (empty($stock))
-                            @foreach ($stock as $producto)
-                                <div class="col-md-6 my-2 producto"
-                                    data-nombre='{{$producto->producto}}'
-                                    data-codigo='{{$producto->id}}'
-                                >
-                                    <div class="card mx-auto d-flex">
-
-                                        <div class="row no-gutters">
-
-                                            <div class="col-4 overflow-hidden d-flex">
-                                                <img src="{{url('img/productos/'.$producto->imagen)}}" alt="No se encontró la imagen" class="mw-100 mh-100 m-auto">
-                                            </div>
-
-                                            <div class="col-8">
-                                                <div class="card-body">
-                                                    <div class="d-flex w-100 justify-content-between">
-                                                        <h5 class="mb-1">{{$producto->producto}}</h5>
-                                                        <small>{{$producto->tamano}} {{$producto->unidadMedida}}</small>
-                                                    </div>
-                                                    <ul class="list-group list-group-flush">
-                                                        <li class="list-group-item">
-                                                            {{$producto->disponible}} @if ($producto->formaVenta == 'granel')
-                                                                {{$producto->unidadMedida}}
-                                                            @else
-                                                                {{'piezas'}}
-                                                            @endif
-                                                        </li>
-                                                        <li class="list-group-item">${{$producto->precioVenta}}</li>
-                                                    </ul>
-                                                    {{-- <p class="card-text">{{$producto->cantidadDisponible}}</p>
-                                                    <p class="card-text text-muted">{{$producto->id}}</p> --}}
-                                                    <a href="{{route('stock.showEditar',$producto->id)}}" class="btn btn-link">Editar producto</a>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-                                    </div>
-                                </div>
-                            @endforeach
-                            </div>
-
-                            <div class="w-100"></div>
-
-                            {{-- <nav aria-label="Page navigation example">
-                                <ul class="pagination">
-                                    <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Previous">
-                                        <span aria-hidden="true">&laquo;</span>
-                                    </a>
-                                    </li>
-                                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item">
-                                    <a class="page-link" href="#" aria-label="Next">
-                                        <span aria-hidden="true">&raquo;</span>
-                                    </a>
-                                    </li>
-                                </ul>
-                            </nav> --}}
-
-                            {{$stock->links()}}
-                        @else
-                        <div class="col-12 my-2">
-                            <span class="display-4">No hay productos registrados</span>
+                        <div class="col-12">
+                            <h2>Productos en stock</h2>
                         </div>
-                        @endunless
+                        <div class="col-12 row justify-content-center">
+                            <form id="formBuscar" class="col-12 row justify-content-center">
+                                @csrf
+                                <input type="hidden" name="buscar" value="1">
+                                <div class="form-group col-md col-6 d-flex justify-content-center flex-column">
+                                    <label for="codigo">Código de barras:</label>
+                                    <input type="text" name="codigo" id="codigo" placeholder="Nombre" class="form-control">
+                                </div>
+                                <div class="form-group col-md col-6 d-flex justify-content-center flex-column">
+                                    <label for="nombre">Nombre del producto:</label>
+                                    <input type="text" name="nombre" id="nombre" placeholder="Nombre" class="form-control">
+                                </div>
+                                <div class="form-group col-md col-6 d-flex justify-content-center flex-column">
+                                    <label for="marca">Marca:</label>
+                                    <select name="marca" id="marca" class="form-control">
+                                        <option value="">Elige una marca</option>
+                                        @foreach ($tiendaLog->marcas as $marca)
+                                            <option value="{{$marca->id}}" >{{$marca->marca}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group col-md col-6 d-flex flex-column justify-content-around">
+                                    <button class="btn btn-primary" id="buscar"> Buscar </button>
+                                </div>
+                                <div class="form-group col-12 d-flex justify-content-center">
+                                    @forelse ($tiendaLog->categorias as $categoria)
+                                        <div class="btn-group-toggle" data-toggle="buttons">
+                                            <label class="btn btn-outline-dark">
+                                                <input type="checkbox" autocomplete="off" name="cat-{{$categoria->id}}">
+                                                <i class="material-icons" style="color:{{$categoria->color}};vertical-align:bottom;cursor:default;" title="{{$categoria->categoria}}">label</i>
+                                                {{$categoria->categoria}}
+                                            </label>
+                                        </div>
+                                    @empty
+
+                                    @endforelse
+                                </div>
+
+                            </form>
+                        </div>
+                        <div class="col-12 row lista-producto justify-content-center" id="productos">
+
+                            @include('tienda.stock.productos')
+
+                        </div>
+
 
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+<script>
+    function FDtoJSON(FormData) {
+        let object = {};
+        object['categorias'] = [];
+        FormData.forEach(
+            (value,key)=>{
+                if (key.includes("cat-")) {
+                    object['categorias'].push(key.split('cat-')[1]);
+                }else if(value!=''){
+                    object[key]=value;
+                }
+            }
+        );
+        return object;
+    }
+
+    function fetch_data(data,url){
+        $.ajax({
+            url:url,
+            data: data,
+            headers:{
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            method:"POST",
+            success:function(data)
+            {
+                $("#productos").html(data);
+            },
+            error:function (error) {
+                console.log(error);
+            }
+        });
+    }
+
+    let loader = `
+    <div class="d-flex justify-content-center">
+        <div class="spinner-border" style="width: 4rem; height: 4rem;" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+    `;
+
+
+
+    $(document).ready(function () {
+        $(document).on('click','.pagination a, .page-link a',function (ev) {
+            ev.preventDefault();
+            let page = $(this).attr('href').split('page=')[1];
+
+            $("#productos").empty();
+            $(loader).clone().appendTo($("#productos"));
+
+            let data = {page:page};
+            let url = $(this).attr('href');
+            fetch_data(data, url);
+        });
+
+        $("#buscar").on('click',function (ev) {
+            ev.preventDefault();
+
+            $("#productos").empty();
+            $(loader).clone().appendTo($("#productos"));
+
+            let data = FDtoJSON(new FormData($("#formBuscar")[0]));
+            let url = '{{route('stock.buscar')}}';
+
+            fetch_data(data, url);
+
+        });
+    });
+</script>
 @endsection

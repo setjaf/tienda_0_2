@@ -48,7 +48,7 @@
                                                     data-marca='{{$marca->marca}}'
                                                     data-idmarca='{{$marca->id}}'
                                                     data-descripcion='{{$marca->descripcion}}'
-                                                    data-activo='{{$marca->activo}}'
+                                                    data-activo='{{$marca->activo?1:0}}'
                                                     data-imagen='{{$marca->imagen}}'
                                                 >Editar marca</a>
                                             </div>
@@ -66,7 +66,7 @@
                             {{$marcas->links()}}
                         @else
                         <div class="col-12 my-2">
-                            <span class="display-4">No hay productos registrados</span>
+                            <span class="display-4">No hay marcas registradas</span>
                         </div>
                         @endunless
 
@@ -147,8 +147,8 @@
 
                     switch (frm.find('[name="' + campo + '"]')[0].type) {
                         case 'checkbox':
-                            if (dataset[campo] == true)
-                                frm.find('[name="' + campo + '"]')[0].checked=true;
+                            if (dataset[campo] == "0")
+                                frm.find('[name="' + campo + '"]')[0].checked=false;
                             break;
 
                         default:

@@ -128,7 +128,7 @@
                                 </div>
                             </div>
 
-                            <div class="form-group col-md-6 row" id="group-disponible">
+                            {{-- <div class="form-group col-md-6 row" id="group-disponible">
                                 <label class="col-md-4 col-form-label text-md-right" for="disponible">{{__('Cantidad de stock disponible:')}}</label>
 
                                 <div class="col-md-6">
@@ -139,7 +139,7 @@
                                         </span>
                                     @enderror
                                 </div>
-                            </div>
+                            </div> --}}
 
                             <div class="form-group col-md-6 row" id="group-precioVenta">
                                 <label class="col-md-4 col-form-label text-md-right" for="precioVenta">{{__('Precio de venta:')}}</label>
@@ -155,10 +155,28 @@
                             </div>
 
                             <div class="form-group col-md-6 text-md-center row">
-                                <div class="custom-control custom-switch">
+                                <label class="col-md-4 col-form-label text-md-right" for="categorias">{{__('Categorías:')}}</label>
+
+                                <div class="col-md-6">
+                                    <select name="categorias[]" id="" class="form-control @error('categorias') is-invalid @enderror" multiple size="2">
+                                        @forelse ($tiendaLog->categorias as $categoria)
+                                            <option value="{{$categoria->id}}">{{$categoria->categoria}}</option>
+                                        @empty
+
+                                        @endforelse
+                                    </select>
+                                    @error('categorias')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                                <div class="col-md-4 "></div>
+                                <div class=" col-md-6 custom-control custom-switch mt-2">
                                     <input type="checkbox" class="custom-control-input" name="activo" id="activo" checked @if (old('activo')) checked @endif>
                                     <label class="custom-control-label" for="activo">Activo</label>
                                 </div>
+
                             </div>
 
                             <div class="w-100"></div>

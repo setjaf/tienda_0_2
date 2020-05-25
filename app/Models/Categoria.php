@@ -12,8 +12,12 @@ class Categoria extends Model
     }
 
     public function productos(){
-        return $this->belongsToMany('App\Models\Producto', 'categoria_producto', 'idCategoria','idProducto');
+        return $this->belongsToMany('App\Models\Producto', 'producto_categorias', 'idCategoria','idProducto');
     }
+
+    protected $casts = [
+        'activo' => 'boolean'
+    ];
 
     protected $fillable = [
         'idTienda', 'categoria', 'descripcion', 'color', 'activo'

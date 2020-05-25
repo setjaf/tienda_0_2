@@ -26,6 +26,10 @@ class Producto extends Model
         return $this->belongsToMany('App\Models\Proveedor','producto_proveedors','idProducto','idProveedor')->withPivot('precio');
     }
 
+    public function categorias(){
+        return $this->belongsToMany('App\Models\Categoria', 'producto_categorias', 'idProducto', 'idCategoria');
+    }
+
     protected $fillable = [
         'codigo','idTienda','idMarca','producto','unidadMedida','formaVenta','tamano','disponible','deseado','precioVenta','imagen','activo'
     ];

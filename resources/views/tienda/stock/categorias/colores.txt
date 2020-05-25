@@ -1,0 +1,15 @@
+<a class="dropdown-item" data-color="#C0C0C0"><i class="material-icons" style="color:#C0C0C0">label</i></a>
+<a class="dropdown-item" data-color="#808080"><i class="material-icons" style="color:#808080">label</i></a>
+<a class="dropdown-item" data-color="#000000"><i class="material-icons" style="color:#000000">label</i></a>
+<a class="dropdown-item" data-color="#FF0000"><i class="material-icons" style="color:#FF0000">label</i></a>
+<a class="dropdown-item" data-color="#800000"><i class="material-icons" style="color:#800000">label</i></a>
+<a class="dropdown-item" data-color="#FFFF00"><i class="material-icons" style="color:#FFFF00">label</i></a>
+<a class="dropdown-item" data-color="#808000"><i class="material-icons" style="color:#808000">label</i></a>
+<a class="dropdown-item" data-color="#00FF00"><i class="material-icons" style="color:#00FF00">label</i></a>
+<a class="dropdown-item" data-color="#008000"><i class="material-icons" style="color:#008000">label</i></a>
+<a class="dropdown-item" data-color="#00FFFF"><i class="material-icons" style="color:#00FFFF">label</i></a>
+<a class="dropdown-item" data-color="#008080"><i class="material-icons" style="color:#008080">label</i></a>
+<a class="dropdown-item" data-color="#0000FF"><i class="material-icons" style="color:#0000FF">label</i></a>
+<a class="dropdown-item" data-color="#000080"><i class="material-icons" style="color:#000080">label</i></a>
+<a class="dropdown-item" data-color="#FF00FF"><i class="material-icons" style="color:#FF00FF">label</i></a>
+<a class="dropdown-item" data-color="#800080"><i class="material-icons" style="color:#800080">label</i></a>

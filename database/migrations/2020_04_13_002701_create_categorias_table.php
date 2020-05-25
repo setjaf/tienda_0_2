@@ -18,7 +18,7 @@ class CreateCategoriasTable extends Migration
             $table->foreignId('idTienda');
             $table->string('categoria')->nullable(false);
             $table->longText('descripcion');
-            $table->string('color',7)->nullable(false);
+            $table->string('color',7)->nullable(true);
             $table->boolean('activo')->nullable(false)->default(true);
             $table->timestamps();
 
