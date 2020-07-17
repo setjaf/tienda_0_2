@@ -118,7 +118,9 @@
                                 {{-- <input id="rol" type="text" class="form-control @error('rol') is-invalid @enderror" name="rol" value="{{ old('rol') }}" required autocomplete="lname" autofocus> --}}
                                 <select name="idrol" id="idrol" class="form-control @error('idrol') is-invalid @enderror">
                                     @forelse ($rols as $rol)
-                                        <option value="{{$rol->id}}" {{ (old("idrol") == $rol ? "selected":"") }}>{{$rol->rol}}</option>
+                                    @if ($rol->id != 1)
+                                    <option value="{{$rol->id}}" {{ (old("idrol") == $rol ? "selected":"") }}>{{$rol->rol}}</option>
+                                    @endif
                                     @empty
                                         <option value="">No hay tipos de usuario disponibles</option>
                                     @endforelse

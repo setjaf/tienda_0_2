@@ -15,9 +15,9 @@ class TiendaIsOpen
      */
     public function handle($request, Closure $next)
     {
-        if(!$request->session()->has('idTienda'))
+        if(!session()->has('idTienda')){
             return redirect()->route('tiendas');
-
+        }
         return $next($request);
     }
 }

@@ -18,6 +18,7 @@ class CreateVentasTable extends Migration
             $table->foreignId('idTienda')->nullable(false);
             $table->foreignId('idUsuario')->nullable(false);
             $table->float('importe')->nullable(false);
+            $table->longText('comentarios')->nullable(true);
             $table->dateTime('fecha')->nullable(false);
             $table->timestamps();
 
@@ -30,8 +31,10 @@ class CreateVentasTable extends Migration
             $table->id();
             $table->foreignId('idVenta')->nullable(false);
             $table->foreignId('idProducto')->nullable(false);
+            $table->float('unidades')->nullable(false);
             $table->float('precioFinal')->nullable(false);
-            $table->dateTime('PrecioVenta')->nullable(false);
+            $table->float('precioVenta')->nullable(false);
+            $table->float('subtotal')->nullable(false);
             $table->timestamps();
 
             $table->foreign('idVenta')->references('id')->on('ventas');

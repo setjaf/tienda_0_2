@@ -42,6 +42,19 @@ class LoginController extends Controller
     }
 
     /**
+     * Show the application's login form.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showLoginForm()
+    {
+        if (session()->has('idTienda'))
+            return redirect()->route('tienda.showLogin');
+        else
+            return view('auth.login');
+    }
+
+    /**
      * Get the needed authorization credentials from the request.
      *
      * @param  \Illuminate\Http\Request  $request

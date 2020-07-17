@@ -10,10 +10,15 @@ class Gasto extends Model
         'idTipoGasto', 'idUsuario','idTienda','importe', 'fecha','descripcion'
     ];
 
+    protected $casts = [
+        'fecha' => 'datetime',
+    ];
+
     public function tipoGasto()
     {
         return $this->belongsTo('App\Models\TipoGasto','idTipoGasto');
     }
+
 
 
 }

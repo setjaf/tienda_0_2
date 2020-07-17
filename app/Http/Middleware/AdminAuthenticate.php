@@ -20,7 +20,7 @@ class AdminAuthenticate
         $user = Auth::user();
 
         if($user->rol != Rol::find(2)){
-            return redirect('/');
+            return redirect()->route('login');
         }
 
         return $next($request);

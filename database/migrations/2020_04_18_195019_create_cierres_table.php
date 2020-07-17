@@ -23,7 +23,7 @@ class CreateCierresTable extends Migration
             $table->float('billetes')->nullable(false);
             $table->float('monedas')->nullable(false);
             $table->float('total')->nullable(false);
-            $table->longText('comentarios');
+            $table->longText('comentarios')->nullable(true);
             $table->timestamps();
 
             $table->foreign('idTipoCierre')->references('id')->on('tipo_cierres');

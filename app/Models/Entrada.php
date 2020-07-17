@@ -19,7 +19,7 @@ class Entrada extends Model
 
     public function productos()
     {
-        return $this->belongsToMany('App\Models\Producto','procducto_entradas','idEntrada','idProducto')->withPivot(['unidades','precioCompra','precioVenta','precioVentaAnterior']);
+        return $this->belongsToMany('App\Models\Producto','producto_entradas','idEntrada','idProducto')->withPivot(['unidades','precioCompra','precioVenta','precioVentaAnterior']);
     }
 
     protected $casts = [

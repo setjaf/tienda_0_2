@@ -22,11 +22,11 @@ class Usuario extends Authenticatable implements MustVerifyEmail
     }
 
     public function administra(){
-        return $this->hasOne('App\Models\Tienda','idUsuario');
+        return $this->hasMany('App\Models\Tienda','idUsuario');
     }
 
     public function trabajaEn(){
-        return $this->belongsToMany('App\Models\Empleado','empleados','idUsuario','idTienda');
+        return $this->belongsToMany('App\Models\Tienda','empleados','idUsuario','idTienda')->withPivot('id','sueldo', 'formaPago', 'inicio');
     }
 
     public function cierres()

@@ -18,7 +18,7 @@ class CreateMarcasTable extends Migration
             $table->foreignId('idTienda');
             $table->string('marca')->nullable(false);
             $table->longText('descripcion');
-            $table->string('imagen')->default('marca_default.jpg');
+            $table->string('imagen')->default('marca_default.png');
             $table->boolean('activo')->nullable(false)->default(true);
             $table->timestamps();
 

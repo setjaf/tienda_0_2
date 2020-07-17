@@ -16,11 +16,13 @@ class CreateAsistenciasTable extends Migration
         Schema::create('asistencias', function (Blueprint $table) {
             $table->id();
             $table->foreignId('idEmpleado');
+            $table->foreignId('idTienda');
             $table->dateTime('entrada');
-            $table->dateTime('salida');
+            $table->dateTime('salida')->nullable(true)->default(null);
             $table->timestamps();
 
             $table->foreign('idEmpleado')->references('id')->on('empleados');
+            $table->foreign('idTienda')->references('id')->on('tiendas');
         });
     }
 

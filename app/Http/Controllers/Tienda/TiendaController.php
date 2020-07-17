@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Tienda;
 
 
 use App\Http\Controllers\Controller;
+use App\Models\Asistencia;
 use App\Models\Tienda;
+use DateTime;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -24,11 +26,13 @@ class TiendaController extends Controller
 
     public function __construct(){
         // Revisa si hay un usuario loggeado
-        $this->middleware('auth',['except'=>['cerar','showLogin','login']]);
+        $this->middleware('auth',['except'=>['cerrar','showLogin','login']]);
         // Comprueba si el correo del usuario actual está verificado
-        $this->middleware('verified',['except'=>['cerar','login','showLogin']]);
+        $this->middleware('verified',['except'=>['cerrar','login','showLogin']]);
         // Verifica que una tienda esté iniciada, si no está iniciada te regresa a '/tiendas'
         $this->middleware('tiendaOpen',['except'=>['entrar']]);
+        // Verifica que el usuario sea empleado o administrador de la tienda
+        $this->middleware('belongsToTienda',['only'=>['showTienda']]);
     }
 
     public function entrar(Request $request){
@@ -91,5 +95,58 @@ class TiendaController extends Controller
         return view('tienda.inicio')->with('tiendaLog',$tienda);
     }
 
+    public function showEmpleadosAsistencia(Request $request)
+    {
+        if ($request->ajax()) {
+
+            $tienda = Tienda::find(session('idTienda'));
+
+            return view('tienda.empleados')
+                ->with('empleadosSalida',$tienda->empleadosSalida())
+                ->with('empleadosEntrada',$tienda->empleadosEntrada())
+                ->render();
+        }
+    }
+
+    public function empleadosAsistencia(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = $request->all();
+            $hoy = (new DateTime('NOW'))->format('d-m-Y');
+            $asistencia = null;
+            if ($data['entrada']) {
+                $asistencia = Asistencia::create([
+                    'idEmpleado' => $data['idempleado'],
+                    'idTienda' => session('idTienda'),
+                    'entrada' => new DateTime('NOW')
+                ]);
+            }else{
+                $asistencia = Asistencia::where(
+                    [
+                        ['idEmpleado',$data['idempleado']],
+                        ['entrada','>=',new DateTime($hoy)],
+                    ]
+                )->first();
+                $asistencia->salida = new DateTime('NOW');
+                $asistencia->save();
+            }
+
+            $dataResponse = [];
+
+            if ($asistencia != null) {
+                $dataResponse = [
+                    'ok' => true,
+                    'entrada' => $data['entrada']?true:false,
+                ];
+            }else{
+                $dataResponse = [
+                    'ok' => false,
+                ];
+            }
+
+            return response()->json($dataResponse);
+
+        }
+    }
 
 }

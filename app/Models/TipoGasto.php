@@ -6,5 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class TipoGasto extends Model
 {
-    //
+    protected $fillable = [
+        'idTienda', 'nombre', 'descripcion', 'color'
+    ];
 }

@@ -18,11 +18,11 @@ class Venta extends Model
 
     public function productos()
     {
-        return $this->belongsToMany('App\Models\Producto','producto_ventas','idVenta','idProducto')->withPivot('precioFinal','precioVenta');
+        return $this->belongsToMany('App\Models\Producto','producto_ventas','idVenta','idProducto')->withPivot('unidades','precioFinal','precioVenta','subtotal');
     }
 
     protected $fillable = [
-        'idTienda','idUsuario','importe','fecha'
+        'idTienda','idUsuario','importe','fecha', 'comentarios'
     ];
 
     protected $casts = [

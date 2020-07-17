@@ -19,6 +19,11 @@ class RedirectIfAuthenticated
     public function handle($request, Closure $next, $guard = null)
     {
         if (Auth::guard($guard)->check()) {
+            if (session()->has('idTienda') && (Auth::user()->trabajaEn->contains(session('idTienda')) ||  Auth::user()->administra->id == session('idTienda'))) {
+                return redirect()->route('tienda');
+            }elseif (Auth::user()->rol->id == 2) {
+                return redirect()->route('tiendas');
+            }
             return redirect(RouteServiceProvider::HOME);
         }
 

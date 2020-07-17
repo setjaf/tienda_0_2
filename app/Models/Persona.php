@@ -11,6 +11,11 @@ class Persona extends Model
         return $this->hasOne('App\Models\Usuario','idPersona');
     }
 
+    public function getNombreCompletoAttribute()
+    {
+        return "{$this->nombre} {$this->paterno} {$this->materno}";
+    }
+
     public $fillable = [
         'nombre', 'paterno', 'materno', 'fecha_nacimiento', 'curp', 'rfc', 'telefono'
     ];

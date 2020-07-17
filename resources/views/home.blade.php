@@ -3,9 +3,9 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="w-100">
             <div class="card">
-                <div class="card-header">Dashboard</div>
+                <div class="card-header"></div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -13,8 +13,9 @@
                             {{ session('status') }}
                         </div>
                     @endif
-
-                    You are logged in!
+                    Si te encuentras en esta página es debido a que no eres administrador
+                    y tampoco se ha abierto una tienda en el dispositivo. Solicita al administrador de la tienda
+                    que realice la apertura de la tienda en el dispositivo para que puedas comenzar a trabajar.
                 </div>
             </div>
         </div>

@@ -25,7 +25,7 @@ class CreateProductosTable extends Migration
             $table->float('disponible')->nullable(false)->default(0);
             $table->float('deseado')->nullable(false)->default(0);
             $table->float('precioVenta')->nullable(false)->default(0);
-            $table->string('imagen')->default('producto_default.jpg');
+            $table->string('imagen')->default('producto_default.png');
             $table->boolean('activo')->nullable(false)->default(true);
             $table->timestamps();
 

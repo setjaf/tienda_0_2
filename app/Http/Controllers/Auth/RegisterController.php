@@ -9,6 +9,7 @@ use App\Models\Usuario;
 use App\Providers\RouteServiceProvider;
 use App\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -100,18 +101,30 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+    }
 
-        switch ($data['idrol']) {
+    /**
+     * The user has been registered.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    protected function registered(Request $request, $user)
+    {
+
+        switch ($user->rol->id) {
             case '1':
                 $this->redirectTo = '/super';
                 break;
 
             case '2':
+                session()->forget('idTienda');
                 $this->redirectTo = '/tiendas';
                 break;
 
             default:
-                $this->redirectTo = '/home';
+                $this->redirectTo = '/tienda';
                 break;
         }
     }

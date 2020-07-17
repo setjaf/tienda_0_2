@@ -3,9 +3,14 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-10">
+        <div class="w-100">
             <div class="card">
-                <div class="card-header">{{ __('Stock') }}</div>
+                <div class="card-header d-flex justify-content-around">
+                    <span class="h4">{{ __('Stock') }}</span>
+                    <a href="{{route('tienda')}}" class="position-absolute text-truncate w-25" style="left: 10px;">
+                        <i class="material-icons align-bottom">arrow_back_ios</i>Ir al inicio
+                    </a>
+                </div>
 
                 <div class="card-body">
                     @if(session()->has('message'))
@@ -13,6 +18,7 @@
                             {{ session('message') }}
                         </div>
                     @endif
+
                     <div class="row justify-content-center my-auto">
 
                         <div class="col-12 text-center row justify-content-center">
@@ -42,6 +48,25 @@
                                     </div>
                                 </a>
                             </div>
+
+                            <div class="col-md-4 col-6">
+                                <a href="{{route('stock.showEntradas')}}" class="text-secondary">
+                                    <div class="p-3 text-center">
+                                        <i class="material-icons" style="font-size: 70px">input</i>
+                                        <p>Entradas de productos</p>
+                                    </div>
+                                </a>
+                            </div>
+
+                            <div class="col-md-4 col-6">
+                                <a href="{{route('proveedores.show')}}" class="text-secondary">
+                                    <div class="p-3 text-center">
+                                        <i class="material-icons" style="font-size: 70px">local_shipping</i>
+                                        <p>Proveedores</p>
+                                    </div>
+                                </a>
+                            </div>
+
                         </div>
                         <div class="col-12">
                             <h2>Productos en stock</h2>
@@ -52,7 +77,7 @@
                                 <input type="hidden" name="buscar" value="1">
                                 <div class="form-group col-md col-6 d-flex justify-content-center flex-column">
                                     <label for="codigo">Código de barras:</label>
-                                    <input type="text" name="codigo" id="codigo" placeholder="Nombre" class="form-control">
+                                    <input type="text" name="codigo" id="codigo" placeholder="1000000000001" class="form-control">
                                 </div>
                                 <div class="form-group col-md col-6 d-flex justify-content-center flex-column">
                                     <label for="nombre">Nombre del producto:</label>
@@ -86,6 +111,12 @@
 
                             </form>
                         </div>
+                        @if ($tiendaLog->marcas->count() == 0)
+                        <div class="col-12 text-center">
+                            <a href="{{route('tienda.stock.cargar.catalogo')}}" class="btn btn-success">Agregar productos y marcas del catálogo</a>
+                        </div>
+                        @endif
+
                         <div class="col-12 row lista-producto justify-content-center" id="productos">
 
                             @include('tienda.stock.productos')
@@ -166,11 +197,15 @@
             $(loader).clone().appendTo($("#productos"));
 
             let data = FDtoJSON(new FormData($("#formBuscar")[0]));
-            let url = '{{route('stock.buscar')}}';
+            let url = '{{route('tienda.stock.buscar')}}';
 
             fetch_data(data, url);
 
         });
+
+        // $(".btn-group-toggle").on('click',function () {
+        //     $(document).focus();
+        // });
     });
 </script>
 @endsection

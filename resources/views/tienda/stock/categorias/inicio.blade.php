@@ -3,9 +3,14 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-10">
+        <div class="w-100">
             <div class="card">
-                <div class="card-header">{{ __('Categorias') }}</div>
+                <div class="card-header d-flex justify-content-around">
+                    <span class="h4">{{ __('Categorias') }}</span>
+                    <a href="{{route('tienda.stock')}}" class="position-absolute text-truncate w-25" style="left: 10px;">
+                        <i class="material-icons align-bottom">arrow_back_ios</i>Ir al stock
+                    </a>
+                </div>
 
                 <div class="card-body">
                     @if(session()->has('message'))
@@ -30,7 +35,7 @@
                         <div class="col-12 text-center row justify-content-center">
                             <div class="col-md-4">
                                 <a href="#" class="text-secondary nuevaCategoria" data-toggle="modal" data-target="#categoriaModal">
-                                    <div class="p-5 text-center">
+                                    <div class="p-3 text-center">
                                         <i class="material-icons" style="font-size: 70px">add_box</i>
                                         <p>Agregar categoria</p>
                                     </div>
@@ -38,14 +43,13 @@
                             </div>
                         </div>
                         <div class="col-12 row overflow-auto lista-producto" style="max-height:500px;">
-                        @unless (empty($categorias))
-                            @foreach ($categorias as $categoria)
+                    @forelse ($categorias as $categoria)
                             <div class="col-md-4 my-2 categoria">
                                 <div class="card mx-auto d-flex" @if ($categoria->color != null) style='border-top: 5px solid {{$categoria->color}};' @endif>
 
                                     <div class="row no-gutters">
 
-                                        {{-- <div class="col-4 overflow-hidden d-flex">
+                                        {{-- <div class="col-4 overflow-hidden d-flex p-3">
                                             <img src="{{url('img/categorias/'.$categoria->imagen)}}" alt="No se encontró la imagen" class="mw-100 mh-100 m-auto">
                                         </div> --}}
 
@@ -78,17 +82,16 @@
 
                                 </div>
                             </div>
-                            @endforeach
+
+                        @empty
+                            <div class="col-12 my-2">
+                                <span class="h4">No hay categorias registradas</span>
                             </div>
-
-                            <div class="w-100"></div>
-
-                            {{$categorias->links()}}
-                        @else
-                        <div class="col-12 my-2">
-                            <span class="">No hay categorias registradas</span>
+                        @endforelse
                         </div>
-                        @endunless
+                    {{-- <div class="w-100"></div>
+
+                    {{$categorias->links()}} --}}
 
                     </div>
 

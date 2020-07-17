@@ -14,11 +14,11 @@ class TiendasController extends Controller
     public function __construct()
     {
         // Revisa si hay un usuario loggeado
-        $this->middleware('auth',['except'=>['login','showLogin']]);
+        $this->middleware('auth');
         // Comprueba si el correo del usuario actual está verificado
-        $this->middleware('verified',['except'=>['login','showLogin']]);
+        $this->middleware('verified');
         // Verifica que el usuario loggeado sea un administrador
-        $this->middleware('isAdmin',['except'=>['login','showLogin']]);
+        $this->middleware('isAdmin');
     }
 
     public function showTiendas(){

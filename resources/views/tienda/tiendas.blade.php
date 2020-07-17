@@ -4,17 +4,15 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-10">
+        <div class="w-100">
             <div class="card">
-                <div class="card-header">
-                    <div class="row justify-content-between">
-                        <div class="col-2">{{ __('Tiendas') }}</div>
-                        <div class="col-1">
-                            <a href="{{ route('tiendas.showNueva') }}" title="Agregar nueva tienda">
-                                <i class="material-icons">add_circle</i>
-                            </a>
-                        </div>
-                    </div>
+                <div class="card-header d-flex justify-content-around">
+                    <span class="h4">{{ __('Tiendas') }}</span>
+                    <a href="{{ route('tiendas.showNueva') }}" title="Agregar un tienda nueva"
+                        class="position-absolute text-truncate w-25" style="right: 10px;"
+                    >
+                        <i class="material-icons">add_circle</i>
+                    </a>
                 </div>
 
                 <div class="card-body">

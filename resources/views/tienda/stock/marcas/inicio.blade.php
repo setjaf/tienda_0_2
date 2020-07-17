@@ -3,9 +3,14 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-10">
+        <div class="w-100">
             <div class="card">
-                <div class="card-header">{{ __('Marcas') }}</div>
+                <div class="card-header d-flex justify-content-around">
+                    <span class="h4">{{ __('Marcas') }}</span>
+                    <a href="{{route('tienda.stock')}}" class="position-absolute text-truncate w-25" style="left: 10px;">
+                        <i class="material-icons align-bottom">arrow_back_ios</i>Ir al stock
+                    </a>
+                </div>
 
                 <div class="card-body">
                     @if(session()->has('message'))
@@ -18,7 +23,7 @@
                         <div class="col-12 text-center row justify-content-center">
                             <div class="col-md-4">
                                 <a href="#" class="text-secondary nuevaMarca" data-toggle="modal" data-target="#marcaModal">
-                                    <div class="p-5 text-center">
+                                    <div class="p-3 text-center">
                                         <i class="material-icons" style="font-size: 70px">add_box</i>
                                         <p>Agregar marca</p>
                                     </div>
@@ -26,14 +31,14 @@
                             </div>
                         </div>
                         <div class="col-12 row overflow-auto lista-producto" style="max-height:500px;">
-                        @unless (empty($marcas))
-                            @foreach ($marcas as $marca)
+
+                        @forelse ($marcas as $marca)
                             <div class="col-md-6 my-2 marca">
                                 <div class="card mx-auto d-flex">
 
                                     <div class="row no-gutters">
 
-                                        <div class="col-4 overflow-hidden d-flex">
+                                        <div class="col-4 overflow-hidden d-flex p-3">
                                             <img src="{{url('img/marcas/'.$marca->imagen)}}" alt="No se encontró la imagen" class="mw-100 mh-100 m-auto">
                                         </div>
 
@@ -58,17 +63,17 @@
 
                                 </div>
                             </div>
-                            @endforeach
-                            </div>
-
-                            <div class="w-100"></div>
-
-                            {{$marcas->links()}}
-                        @else
+                        @empty
                         <div class="col-12 my-2">
-                            <span class="display-4">No hay marcas registradas</span>
+                            <span class="h4">No hay marcas registradas</span>
                         </div>
-                        @endunless
+                        @endforelse
+
+                        </div>
+
+                        {{-- <div class="w-100"></div>
+
+                        {{$marcas->links()}} --}}
 
                     </div>
 

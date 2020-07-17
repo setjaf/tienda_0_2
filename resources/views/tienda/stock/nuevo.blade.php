@@ -4,9 +4,14 @@
 
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-10">
+        <div class="w-100">
             <div class="card">
-                <div class="card-header">{{ __('Nuevo producto') }}</div>
+                <div class="card-header d-flex justify-content-around">
+                    <span class="h4">{{ __('Nuevo producto') }}</span>
+                    <a href="{{route('tienda.stock')}}" class="position-absolute text-truncate w-25" style="left: 10px;">
+                        <i class="material-icons align-bottom">arrow_back_ios</i>Ir al stock
+                    </a>
+                </div>
 
                 <div class="card-body">
 
@@ -54,7 +59,7 @@
                                 <label class="col-md-4 col-form-label text-md-right" for="formaVenta">{{__('Forma de venta:')}}</label>
 
                                 <div class="col-md-6">
-                                    <select name="formaVenta" id="formaVenta" class="form-control @error('formaVenta') is-invalid @enderror" onchange="if($('#formaVenta').val()==2){$('#group-tamano').hide()}else{$('#group-tamano').show()}" required>
+                                    <select name="formaVenta" id="formaVenta" class="form-control @error('formaVenta') is-invalid @enderror" onchange="if($('#formaVenta').val()==1){$('.granel').hide();$('.pieza').show()}else{$('.granel').show();$('.pieza').hide()}" required>
                                         <option value="1">pieza</option>
                                         <option value="2">granel</option>
                                     </select>
@@ -85,11 +90,31 @@
                                 </div>
                             </div>
 
+                            <div class="form-group col-md-6 row" id="group-tamano">
+                                <label class="col-md-4 col-form-label text-md-right pieza" for="tamano">{{__('Tamaño del producto:')}}</label>
+                                <label class="col-md-4 col-form-label text-md-right granel" style="display:none;" for="tamano">{{__('Cantidad referencia para el precio:')}}</label>
+
+                                <div class="col-md-6">
+                                    <div class="input-group mb-3">
+                                        <input type="number" name="tamano" placeholder="0.00" class="form-control @error('tamano') is-invalid @enderror" value="{{old('tamano')}}">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text" id="tamanoUnidadMedida">ml</span>
+                                        </div>
+                                    </div>
+
+                                    @error('tamano')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+                            </div>
+
                             <div class="form-group col-md-6 row">
                                 <label class="col-md-4 col-form-label text-md-right" for="unidadMedida">{{__('Tipo unidad de medida:')}}</label>
 
                                 <div class="col-md-6">
-                                    <select name="unidadMedida" id="" class="form-control @error('unidadMedida') is-invalid @enderror" required>
+                                    <select name="unidadMedida" id="unidadMedida" class="form-control @error('unidadMedida') is-invalid @enderror" required>
                                         <option value="1">ml (mililitros)</option>
                                         <option value="2">g (gramos)</option>
                                         <option value="3">u (unidades)</option>
@@ -102,12 +127,19 @@
                                 </div>
                             </div>
 
-                            <div class="form-group col-md-6 row" id="group-tamano">
-                                <label class="col-md-4 col-form-label text-md-right" for="tamano">{{__('Tamaño del producto:')}}</label>
+                            <div class="form-group col-md-6 row" id="group-precioVenta">
+                                <label class="col-md-4 col-form-label text-md-right" for="precioVenta">{{__('Precio de venta:')}}</label>
 
                                 <div class="col-md-6">
-                                    <input type="number" name="tamano" placeholder="0.00" class="form-control @error('tamano') is-invalid @enderror" value="{{old('tamano')}}">
-                                    @error('tamano')
+
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">$</span>
+                                        </div>
+                                        <input type="number" name="precioVenta" placeholder="0.00" class="form-control @error('precioVenta') is-invalid @enderror" value="{{old('precioVenta')}}">
+                                    </div>
+
+                                    @error('precioVenta')
                                         <span class="invalid-feedback" role="alert">
                                             <strong>{{ $message }}</strong>
                                         </span>
@@ -128,7 +160,7 @@
                                 </div>
                             </div>
 
-                            {{-- <div class="form-group col-md-6 row" id="group-disponible">
+                            <div class="form-group col-md-6 row" id="group-disponible">
                                 <label class="col-md-4 col-form-label text-md-right" for="disponible">{{__('Cantidad de stock disponible:')}}</label>
 
                                 <div class="col-md-6">
@@ -139,20 +171,8 @@
                                         </span>
                                     @enderror
                                 </div>
-                            </div> --}}
-
-                            <div class="form-group col-md-6 row" id="group-precioVenta">
-                                <label class="col-md-4 col-form-label text-md-right" for="precioVenta">{{__('Precio de venta:')}}</label>
-
-                                <div class="col-md-6">
-                                    <input type="number" name="precioVenta" placeholder="0.00" class="form-control @error('precioVenta') is-invalid @enderror" value="{{old('precioVenta')}}">
-                                    @error('precioVenta')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
-                                </div>
                             </div>
+
 
                             <div class="form-group col-md-6 text-md-center row">
                                 <label class="col-md-4 col-form-label text-md-right" for="categorias">{{__('Categorías:')}}</label>
@@ -226,6 +246,25 @@
 
         $("#imagen").change(function() {
             readURL(this);
+        });
+
+        $("#unidadMedida").change(function (ev) {
+            console.log($(this).val());
+
+            switch (parseInt($(this).val())) {
+                case 1:
+                    $("#tamanoUnidadMedida").text("ml")
+                    break;
+                case 2:
+                    $("#tamanoUnidadMedida").text("g")
+                    break;
+                case 3:
+                    $("#tamanoUnidadMedida").text("u")
+                    break;
+
+                default:
+                    break;
+            }
         });
 
     });
